@@ -8,14 +8,15 @@ const provider = new ethers.providers.JsonRpcProvider(
 );
 eas.connect(provider);
 
-export async function POST(req, res) {
+export async function POST(req) {
   const { uid, signature } = await req.json();
   const attestation = await eas.getAttestation(uid);
-  const isValid = ethers.utils.recoverAddress(attestation.data, signature);
-  console.log("isValid", isValid);
+  const signer = ethers.utils.recoverAddress(attestation.data, signature);
+  const hash = ethers.utils.keccak256(signer);
+  console.log(signer);
   console.log("attestation", attestation);
   return NextResponse.json(
-    { status: "ok", attestation },
+    { status: "ok", hash },
     {
       status: 200,
     }
