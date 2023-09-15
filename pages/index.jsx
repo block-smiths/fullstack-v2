@@ -1,12 +1,37 @@
 "use client";
 import React, { useState } from 'react';
 import { ConnectKitButton } from "connectkit"
+import eas from '@/utils/eas';
+import { SchemaEncoder } from '@ethereum-attestation-service/eas-sdk';
+import { useEthersSigner } from './hooks';
 
 const HomePage = () => {
-  const [recipient, setRecipient] = useState < string > ("");
-  const [hash, setHash] = useState < string > ("");
+  const [recipient, setRecipient] = useState("");
+  const [hash, setHash] = useState("");
 
-  const handleSubmit = async () => {
+  const signer = useEthersSigner(11155111);
+  const schemaEncoder = new SchemaEncoder("address recipient, string hash");
+
+  const schemaUID = "0xb58152f7222796c00d03e40b02efe79be95d8d6dfed96bc6b8c426927d9a8060"
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    eas.connect(signer);
+    const encodedData = schemaEncoder.encodeData([
+      { name: "recipient", value: recipient, type: "address" },
+      { name: "hash", value: hash, type: "string" },
+    ]);
+    const tx = await eas.attest({
+      schema: schemaUID,
+      data: {
+        recipient: recipient,
+        expirationTime: 0,
+        revocable: true, // Be aware that if your schema is not revocable, this MUST be false
+        data: encodedData,
+      },
+    });
+    const newAttestationUID = await tx.wait();
+    console.log(newAttestationUID);
 
   }
 
@@ -51,6 +76,9 @@ const HomePage = () => {
               id="recipient"
               name="recipient"
               className="mt-4 p-2 border border-gray-300 w-full rounded-md focus:outline-none focus:ring-yellow-600 focus:border-yellow-600"
+              onChange={(e) => {
+                setRecipient(e.target.value)
+              }}
             />
           </div>
           <div className="mb-6">
@@ -62,12 +90,16 @@ const HomePage = () => {
               id="certificateHash"
               name="certificateHash"
               className="mt-4 p-2 border border-gray-300 w-full rounded-md focus:outline-none focus:ring-yellow-600 focus:border-yellow-600"
+              onChange={(e) => {
+                setHash(e.target.value)
+              }}
             />
           </div>
           <div className="mt-12">
             <button
               type="submit"
               className="w-full px-4 py-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-600"
+              onClick={handleSubmit}
             >
               Create Credentials
             </button>
