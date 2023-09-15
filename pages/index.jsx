@@ -1,8 +1,15 @@
 "use client";
-import React from 'react';
+import React, { useState } from 'react';
 import { ConnectKitButton } from "connectkit"
 
 const HomePage = () => {
+  const [recipient, setRecipient] = useState < string > ("");
+  const [hash, setHash] = useState < string > ("");
+
+  const handleSubmit = async () => {
+
+  }
+
   return (
     <div
       style={{
@@ -30,13 +37,9 @@ const HomePage = () => {
               id="certificateType"
               name="certificateType"
               className="mt-4 block w-full pl-3 pr-10 py-2 border border-gray-900 bg-white rounded-md focus:outline-none focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm"
+              defaultValue={"aadhar"}
             >
-              <option value="option1">Option 1</option>
-              <option value="option2">Option 2</option>
-              <option value="option3">Option 3</option>
-              <option value="option4">Option 4</option>
-              <option value="option5">Option 5</option>
-              <option value="option5">Option 5</option>
+              <option value="aadhar">Aadhar Card</option>
             </select>
           </div>
           <div className="mb-4">
