@@ -10,20 +10,19 @@ import { fileToSha256Hex } from '../utils/sha256';
 const HomePage = () => {
   const [recipient, setRecipient] = useState("");
   const [file, setFile] = useState("");
-
+  const [type, setType] = useState(1);
   const signer = useEthersSigner(11155111);
-  const schemaEncoder = new SchemaEncoder("address recipient, string hash");
+  const schemaEncoder = new SchemaEncoder("bytes32 hash, uint8 type");
 
-  const schemaUID = "0xb58152f7222796c00d03e40b02efe79be95d8d6dfed96bc6b8c426927d9a8060"
+  const schemaUID = "0x600938ba870eb8250c8f2e04c66f3f8ec554ff508000965ee6ded73bd1ed53d7"
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     eas.connect(signer);
     const hash = await fileToSha256Hex(file)
-    console.log(hash)
     const encodedData = schemaEncoder.encodeData([
-      { name: "recipient", value: recipient, type: "address" },
-      { name: "hash", value: hash, type: "string" },
+      { name: "hash", value: hash, type: "bytes32" },
+      { name: "type", value: type, type: "uint8" },
     ]);
     const tx = await eas.attest({
       schema: schemaUID,
@@ -66,9 +65,13 @@ const HomePage = () => {
               id="certificateType"
               name="certificateType"
               className="mt-4 block w-full pl-3 pr-10 py-2 border border-gray-900 bg-white rounded-md focus:outline-none focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm"
-              defaultValue={"aadhar"}
+              defaultValue={"1"}
+              onChange={(e) => {
+                setType(Number(e.target.value))
+              }}
             >
-              <option value="aadhar">Aadhar Card</option>
+              <option value="1">Aadhar Card</option>
+              <option value="2">PAN Card</option>
             </select>
           </div>
           <div className="mb-4">
