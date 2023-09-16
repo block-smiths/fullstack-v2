@@ -71,7 +71,7 @@ const HomePage = () => {
     setUploaded(false);
   }
 
-  
+
 
   const uploadDocument = async () => {
     if (file === undefined) {
@@ -94,13 +94,6 @@ const HomePage = () => {
     setLoading(false);
     setUploaded(true);
     return;
-  }
-
-  const getDocument = async (hashname) => {
-    const url = `http://45.79.123.179/getfile/${hashname}`;
-    const response = await fetch(url);
-    window.open(response.url, '_blank').focus();
-    console.log(response);
   }
 
   return loading ?
@@ -161,26 +154,12 @@ const HomePage = () => {
                 id="recipient"
                 name="recipient"
                 className="mt-4 p-2 border border-gray-300 w-full rounded-md focus:outline-none focus:ring-yellow-600 focus:border-yellow-600"
+                value={recipient}
                 onChange={(e) => {
                   setRecipient(e.target.value)
                 }}
               />
             </div>
-            {/* <div className="mb-6">
-              <label htmlFor="certificateHash" className="block text-xl font-medium text-white">
-                Hash for the Certificate
-              </label>
-              <input
-                type="text"
-                id="certificateHash"
-                name="certificateHash"
-                className="mt-4 p-2 border border-gray-300 w-full rounded-md focus:outline-none focus:ring-yellow-600 focus:border-yellow-600"
-                value={hash}
-                onChange={(e) => {
-                  setHash(e.target.value)
-                }}
-              />
-            </div> */}
             <div className="mt-12">
 
               {
@@ -201,17 +180,6 @@ const HomePage = () => {
                 >Document Selected (click to cancel)</p>
               }
             </div>
-
-            {/* Remove this Later */}
-            {/* <div>
-              {
-                uploaded && <p
-                  class="text-md text-blue-500"
-                  onClick={() => getDocument(hash)}
-                >View Uploaded Document</p>
-              }
-            </div> */}
-
 
             <div className="mt-12">
               <button
