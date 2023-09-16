@@ -4,6 +4,7 @@ import { ConnectKitButton } from "connectkit"
 import eas from '../utils/eas';
 import { SchemaEncoder } from '@ethereum-attestation-service/eas-sdk';
 import { useEthersSigner } from '../utils/hooks';
+import { useWalletClient } from 'wagmi';
 import { fileToSha256Hex } from '../utils/sha256';
 
 
@@ -11,7 +12,8 @@ const HomePage = () => {
   const [recipient, setRecipient] = useState("");
   const [file, setFile] = useState("");
   const [type, setType] = useState(1);
-  const signer = useEthersSigner(11155111);
+  const { data: walletClient } = useWalletClient({ chainId: 11155111 })
+  const signer = useEthersSigner(walletClient);
   const schemaEncoder = new SchemaEncoder("bytes32 hash, uint8 type");
 
   const schemaUID = "0x600938ba870eb8250c8f2e04c66f3f8ec554ff508000965ee6ded73bd1ed53d7"
