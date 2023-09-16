@@ -2,6 +2,7 @@ import { WagmiConfig, createConfig } from "wagmi";
 import { ConnectKitProvider, getDefaultConfig } from "connectkit";
 import { sepolia } from "wagmi/chains";
 import "../styles/globals.css"
+import { Toaster } from 'react-hot-toast'
 
 const config = createConfig(
   getDefaultConfig({
@@ -18,6 +19,7 @@ const App = ({ Component }) => {
   return (
     <WagmiConfig config={config}>
       <ConnectKitProvider>
+        <Toaster />
         <Component />
       </ConnectKitProvider>
     </WagmiConfig>

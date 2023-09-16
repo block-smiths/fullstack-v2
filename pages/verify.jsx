@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import { ConnectKitButton } from "connectkit"
+import axios from 'axios';
+import { fileToSha256Hex } from '../utils/sha256';
+import { toast } from 'react-hot-toast';
 
 const VerifyPage = () => {
 
@@ -9,6 +12,18 @@ const VerifyPage = () => {
   const handleVerify = async (e) => {
     e.preventDefault();
     const hash = await fileToSha256Hex(file);
+    const res = await axios.get("/api/verifyHash", {
+      params: {
+        hash,
+        recipient
+      }
+    })
+    const isVerified = res.data.verified;
+    if (isVerified) {
+      toast.success("Credential Verified")
+    } else {
+      toast.error("Credential Not Verified")
+    }
   }
 
   return (
