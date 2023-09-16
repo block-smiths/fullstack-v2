@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { ConnectKitButton } from "connectkit"
 import eas from '../utils/eas';
 import { SchemaEncoder } from '@ethereum-attestation-service/eas-sdk';
-import { useEthersSigner } from './hooks';
+import { useEthersSigner } from '../utils/hooks';
 import { fileToSha256Hex } from '../utils/sha256';
 
 

@@ -1,8 +1,6 @@
 
 import * as React from 'react'
-import { type PublicClient, usePublicClient, type WalletClient, useWalletClient } from 'wagmi'
 import { providers } from 'ethers'
-import { type HttpTransport } from 'viem'
 
 function walletClientToSigner(walletClient) {
     const { account, chain, transport } = walletClient
