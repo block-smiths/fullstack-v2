@@ -1,5 +1,5 @@
 import React from "react";
-import classes from "./getFiles.module.css";
+import classes from "./getfiles.module.css";
 
 
 const getFiles = () => {
