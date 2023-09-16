@@ -1,7 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ConnectKitButton } from "connectkit"
 
 const VerifyPage = () => {
+
+  const [recipient, setRecipient] = useState("");
+  const [file, setFile] = useState("");
+
+  const handleVerify = async (e) => {
+    e.preventDefault();
+    console.log(recipient);
+    console.log(file);
+  }
+
   return (
     <div>
       <div className="bg-grey-600 py-4 px-6 flex justify-between items-center w-full mb-4">
@@ -16,6 +26,7 @@ const VerifyPage = () => {
 
       <div className="flex justify-center items-center h-screen">
         <div className="bg-slate-800 p-8 mb-52 ounded-lg shadow-md">
+          <h1 className='text-white font-bold text-2xl mb-4'>Verify Documents</h1>
           <form>
             <div className="mb-4">
               <label htmlFor="recipient" className="block text-white font-bold font-medium">
@@ -28,6 +39,9 @@ const VerifyPage = () => {
                 className="w-full py-2 px-4 mt-1 bg-gray-100 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Enter recipient's address"
                 required
+                onChange={e => {
+                  setRecipient(e.target.value);
+                }}
               />
             </div>
 
@@ -42,6 +56,9 @@ const VerifyPage = () => {
                 className="w-full py-2 px-4 mt-1 bg-gray-100 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 accept=".pdf, .doc, .docx"
                 required
+                onChange={e => {
+                  setFile(e.target.files[0]);
+                }}
               />
             </div>
 
@@ -49,8 +66,9 @@ const VerifyPage = () => {
               <button
                 type="submit"
                 className="bg-yellow-500 text-white py-2 px-6 rounded-md hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                onClick={handleVerify}
               >
-                Submit
+                Verify
               </button>
             </div>
           </form>
