@@ -8,8 +8,7 @@ const VerifyPage = () => {
 
   const handleVerify = async (e) => {
     e.preventDefault();
-    console.log(recipient);
-    console.log(file);
+    const hash = await fileToSha256Hex(file);
   }
 
   return (
