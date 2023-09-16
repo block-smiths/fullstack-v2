@@ -1,7 +1,7 @@
 import { WagmiConfig, createConfig } from "wagmi";
 import { ConnectKitProvider, getDefaultConfig } from "connectkit";
 import { sepolia } from "wagmi/chains";
-import "@/styles/globals.css"
+import "../styles/globals.css"
 
 const config = createConfig(
   getDefaultConfig({
