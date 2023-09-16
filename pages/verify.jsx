@@ -30,7 +30,7 @@ const VerifyPage = () => {
           <form>
             <div className="mb-4">
               <label htmlFor="recipient" className="block text-white font-bold font-medium">
-                Recipient's Address
+                Recipient&apos;s Address
               </label>
               <input
                 type="text"
