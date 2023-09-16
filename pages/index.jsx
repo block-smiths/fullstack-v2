@@ -4,10 +4,12 @@ import { ConnectKitButton } from "connectkit"
 import eas from '@/utils/eas';
 import { SchemaEncoder } from '@ethereum-attestation-service/eas-sdk';
 import { useEthersSigner } from './hooks';
+import { fileToSha256Hex } from '../utils/sha256';
+
 
 const HomePage = () => {
   const [recipient, setRecipient] = useState("");
-  const [hash, setHash] = useState("");
+  const [file, setFile] = useState("");
 
   const signer = useEthersSigner(11155111);
   const schemaEncoder = new SchemaEncoder("address recipient, string hash");
@@ -17,6 +19,8 @@ const HomePage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     eas.connect(signer);
+    const hash = await fileToSha256Hex(file)
+    console.log(hash)
     const encodedData = schemaEncoder.encodeData([
       { name: "recipient", value: recipient, type: "address" },
       { name: "hash", value: hash, type: "string" },
@@ -31,7 +35,7 @@ const HomePage = () => {
       },
     });
     const newAttestationUID = await tx.wait();
-    console.log(newAttestationUID);
+    console.log("Attestation UID: ", newAttestationUID);
 
   }
 
@@ -83,15 +87,15 @@ const HomePage = () => {
           </div>
           <div className="mb-6">
             <label htmlFor="certificateHash" className="block text-xl font-medium text-white">
-              Hash for the Certificate
+              File for the Document
             </label>
             <input
-              type="text"
+              type="file"
               id="certificateHash"
               name="certificateHash"
               className="mt-4 p-2 border border-gray-300 w-full rounded-md focus:outline-none focus:ring-yellow-600 focus:border-yellow-600"
               onChange={(e) => {
-                setHash(e.target.value)
+                setFile(e.target.files[0])
               }}
             />
           </div>
