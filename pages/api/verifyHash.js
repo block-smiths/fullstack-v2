@@ -14,6 +14,7 @@ export default async function handler(req, res) {
             data,
         )
         const verified = values[0] == hash;
+        console.log(hash, values[0])
         res.status(200).send({
             verified,
             data: verified ? data : null
