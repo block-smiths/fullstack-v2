@@ -11,7 +11,7 @@ const getFiles = () => {
           <option value="adhar">Adhar Card</option>
           <option value="pan">Pan Card</option>
         </select>
-        <input className={classes.input} type="text" />
+        <input className={classes.input} type="text" placeholder="Hash" />
         <button className={classes.btn} onClick={handler}>
           Submit
         </button>
