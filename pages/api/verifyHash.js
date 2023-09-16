@@ -1,6 +1,6 @@
-
-import { decodeAbiParameters } from 'viem'
+import { AbiCoder } from 'ethers/lib/utils';
 import { getAttestationData } from '../../utils/gql'
+import { decodeAbiParameters } from "viem"
 
 export default async function handler(req, res) {
     if (req.method == "GET") {
