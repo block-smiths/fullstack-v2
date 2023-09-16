@@ -1,5 +1,5 @@
 import { AbiCoder } from 'ethers/lib/utils';
-import { getAttestationData } from '../../utils/getAttestationData'
+import { getAttestationData } from '../../utils/gql'
 
 export default async function handler(req, res) {
     if (req.method == "GET") {
