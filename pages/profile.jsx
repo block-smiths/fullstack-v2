@@ -4,7 +4,7 @@ import FileCard from "../components/FileCard";
 import { useAccount } from "wagmi";
 import axios from "axios";
 
-const getFiles = () => {
+const Profile = () => {
 
   const { isConnected, address } = useAccount();
   const [_isConnected, setIsConnected] = useState(false);
@@ -57,4 +57,4 @@ const getFiles = () => {
   );
 };
 
-export default getFiles;
+export default Profile;
