@@ -28,16 +28,22 @@ const Profile = () => {
   }, [isConnected])
 
   const render = () => {
-    return data.map((el, id) => {
-      return (
-        <FileCard
-          key={id}
-          recipient={address}
-          hash={el[0]}
-          type={el[1]}
-        />
-      )
-    })
+    if (data.length > 0) {
+      return data.map((el, id) => {
+        return (
+          <FileCard
+            key={id}
+            recipient={address}
+            hash={el[0]}
+            type={el[1]}
+          />
+        )
+      })
+    } else {
+      return (<div className="flex justify-center align-center">
+        <div className="block text-white font-bold font-medium">No Documents Found</div>
+      </div>)
+    }
   }
 
   return (
